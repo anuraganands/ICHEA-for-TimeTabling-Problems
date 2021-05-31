@@ -1,0 +1,29 @@
+            for (int jIdx = 0; jIdx < sat.get(idxTo).size(); jIdx++) {
+                oj = sat.get(idxTo).get(jIdx);
+                if(hardConstraintViolated((Integer)oi, (Integer)oj)){
+                    
+                     bViolated = true;
+                    for (int i = 0; i < sat.size(); i++){
+                        if(i == idxTo || i == idxFrom)
+                            continue;
+                        bViolated = false;
+                        for (int j = 0; j < sat.get(i).size(); j++){
+                            oi = sat.get(i).get(j);
+                            if(hardConstraintViolated((Integer)oi, (Integer)oj)){   
+                                bViolated = true;
+                                break;
+                            }
+                        }
+                        if(!bViolated){//not violated in any member in a column
+                            sat.get(i).add((Integer)oi); //this can be accepted in one of the column   
+                            iIdx--;
+                            break;
+                        }
+                    }
+            if(!bViolated){ //oi is removed, get the new one
+//                for (int i = 0; i < sat.size(); i++) {
+//            System.out.print(sat.get(i));
+//        }
+//                System.out.println("");
+                continue;
+            } 
